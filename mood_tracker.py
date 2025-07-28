@@ -22,6 +22,7 @@ def init_db():
     c = conn.cursor()
     c.execute('''
         CREATE TABLE IF NOT EXISTS moods (
+            username TEXT,
             date TEXT,
             mood TEXT,
             note TEXT,
@@ -36,6 +37,22 @@ conn, c = init_db()
 
 # Title
 st.title("🧘 Mental Health Mood Tracker")
+st.markdown("Track your daily mood, add a note, and reflect on your well-being over time.")
+
+# Username
+st.sidebar.title("Login")
+username = st.sidebar.text_input("Enter your username")
+
+if username:
+    st.session_state["username"] = username
+    st.sidebar.success(f"Logged in as: {username}")
+else:
+    st.stop()  # Prevent app from loading without login
+
+# username = st.text_input("Enter a username:")
+# if not username:
+# st.warning("Please enter your username to begin.")
+# st.stop()
 
 # Input
 st.write("How are you feeling today?")
@@ -44,14 +61,14 @@ note = st.text_area("Add a short note (optional)")
 
 if st.button("Save Entry"):
     sentiment = sia.polarity_scores(note)["compound"] if note else 0.0
-    c.execute("INSERT INTO moods (date, mood, note, sentiment) VALUES (?, ?, ?, ?)",
-              (str(date.today()), mood, note, sentiment))
+    c.execute("INSERT INTO moods (username, date, mood, note, sentiment) VALUES (?, ?, ?, ?, ?)",
+              (username, str(date.today()), mood, note, sentiment))
     conn.commit()
     st.success("Your mood has been saved! 💚")
 
 # Show Data
-if st.checkbox("Show mood chart"):
-    c.execute("SELECT date, sentiment FROM moods ORDER BY date")
+if st.checkbox("Show my mood chart"):
+    c.execute("SELECT date, sentiment FROM moods WHERE username=? ORDER BY date", (username,))
     data = c.fetchall()
     if data:
         dates = [x[0] for x in data]
@@ -82,13 +99,13 @@ def get_random_quote():
         return "No quotes file found. Please add a quotes.txt."
 
 #Show Quotes
-if st.button("Get Positive Quote"):
+if st.button("Get A Positive Quote"):
     quote = get_random_quote()
     st.info(quote)
 
 # Display Recent Entries
-if st.checkbox("Show recent entries"):
-    c.execute("SELECT date, mood, note, sentiment FROM moods ORDER BY date DESC LIMIT 5")
+if st.checkbox("Show my recent entries"):
+    c.execute("SELECT date, mood, note, sentiment FROM moods WHERE username = ? ORDER BY date DESC LIMIT 5", (username,))
     recent_data = c.fetchall()
     if recent_data:
         st.write("### Recent Entries:")
