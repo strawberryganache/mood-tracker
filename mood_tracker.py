@@ -51,9 +51,9 @@ st.markdown("Track your daily mood, add a note, and reflect on your well-being o
 #     st.stop()  
 
 username = st.text_input("Enter a username:")
-    if not username:
-        st.warning("Please enter your username to begin.")
-        st.stop()
+if not username:
+    st.warning("Please enter your username to begin.")
+    st.stop()
 
 # Input
 st.write("How are you feeling today?")
