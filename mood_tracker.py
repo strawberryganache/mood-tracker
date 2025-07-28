@@ -1,4 +1,11 @@
 import streamlit as st
+
+st.set_page_config(
+    page_title="My Mood Tracker",
+    page_icon="🧘",
+    layout="centered"
+)
+
 import sqlite3
 from datetime import date
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -27,9 +34,8 @@ def init_db():
 # Initialize Database
 conn, c = init_db()
 
-# Title and Logo
+# Title
 st.title("🧘 Mental Health Mood Tracker")
-st.logo(🧘)
 
 # Input
 st.write("How are you feeling today?")
