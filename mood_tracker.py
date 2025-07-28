@@ -43,8 +43,8 @@ st.markdown("Track your daily mood, add a note, and reflect on your well-being o
 
 username = st.text_input("Enter your username or nickname:")
 if not username:
-st.warning("Please enter your username to begin.")
-st.stop()
+    st.warning("Please enter your username to begin.")
+    st.stop()
 
 # st.sidebar.title("Login")
 # username = st.sidebar.text_input("Enter your username")
