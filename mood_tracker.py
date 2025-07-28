@@ -40,19 +40,13 @@ st.title("🧘 Mental Health Mood Tracker")
 st.markdown("Track your daily mood, add a note, and reflect on your well-being over time.")
 
 # Username
+st.sidebar.title("Login")
+username = st.sidebar.text_input("Enter your username")
 
-# st.sidebar.title("Login")
-# username = st.sidebar.text_input("Enter your username")
-
-# if username:
-#     st.session_state["username"] = username
-#     st.sidebar.success(f"Logged in as: {username}")
-# else:
-#     st.stop()  
-
-username = st.text_input("Enter a username:")
-if not username:
-    st.warning("Please enter your username to begin.")
+if username:
+    st.session_state["username"] = username
+    st.sidebar.success(f"Logged in as: {username}")
+else:
     st.stop()
 
 # Input
@@ -69,7 +63,7 @@ if st.button("Save Entry"):
 
 # Show Data
 if st.checkbox("Show my mood chart"):
-    c.execute("SELECT date, sentiment FROM moods WHERE username=? ORDER BY date", (username,))
+    c.execute("SELECT date, sentiment FROM moods WHERE username = ? ORDER BY date", (username,))
     data = c.fetchall()
     if data:
         dates = [x[0] for x in data]
