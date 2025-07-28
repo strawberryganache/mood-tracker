@@ -37,12 +37,12 @@ conn, c = init_db()
 
 # Title
 st.title("🧘 Mental Health Mood Tracker")
-st.subheader("Track your daily mood, add a note, and reflect on your well-being over time.")
+st.markdown("Track your daily mood, add a note, and reflect on your well-being over time.")
 
 # Username
 
 st.sidebar.title("Login")
-username = st.sidebar.text_input("Enter your username")
+username = st.sidebar.text_input("Enter your username:", value="", max_chars=20)
 
 if username:
     st.session_state["username"] = username
@@ -51,7 +51,7 @@ else:
     st.stop()
 
 # Input
-st.write(f"Hi {username}, how are you feeling today?")
+st.subheader(f"Hi {username}, how are you feeling today?")
 mood = st.radio("Mood", ["😊 Happy", "😐 Neutral", "😢 Sad"])
 note = st.text_area("Add a short note (optional)")
 
