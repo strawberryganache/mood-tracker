@@ -38,7 +38,7 @@ if st.checkbox("Show mood chart"):
     if data:
         dates = [x[0] for x in data]
         scores = [x[1] for x in data]
-        plt.plot(dates, scores)
+        plt.plot(dates, scores, marker='o')
         plt.xticks(rotation=45)
         plt.title("Mood Sentiment Over Time")
         plt.ylabel("Sentiment Score")
@@ -50,7 +50,6 @@ if st.checkbox("Show mood chart"):
         
         #plt.clf()  # Clear previous plots
         #plt.figure(figsize=(10, 6))
-        #plt.plot(dates, scores, marker='o')
         #plt.grid(True, alpha=0.3)
     
 
