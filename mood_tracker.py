@@ -29,7 +29,7 @@ conn, c = init_db()
 
 # Title and Logo
 st.title("🧘 Mental Health Mood Tracker")
-st.logo("🧘")
+st.logo(🧘)
 
 # Input
 st.write("How are you feeling today?")
