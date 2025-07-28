@@ -63,17 +63,26 @@ if st.checkbox("Show mood chart"):
         st.info("No mood data available yet. Start tracking your moods!")
 
 # Positive Tip
-if st.button("Get Positive Quote"):
-    tips = [
-        "You are doing great! 🌟",
-        "Remember to take deep breaths. 💙",
-        "Small steps are still steps forward. ✨",
-        "Be kind to yourself today. ☀️",
-        "Every day is a new opportunity. 🌈",
-        "You are stronger than you think. 💪",
-        "Take time to appreciate the little things. 🌸"
-    ]
-    st.info(random.choice(tips))
+# if st.button("Get Positive Quote"):
+#     tips = [
+#         "You are doing great! 🌟",
+#         "Remember to take deep breaths. 💙",
+#         "Small steps are still steps forward. ✨",
+#         "Be kind to yourself today. ☀️",
+#         "Every day is a new opportunity. 🌈",
+#         "You are stronger than you think. 💪",
+#         "Take time to appreciate the little things. 🌸"
+#     ]
+#     st.info(random.choice(tips))
+
+def get_random_quote():
+    try:
+        with open("quotes.txt", "r", encoding="utf-8") as f:
+            quotes = [line.strip() for line in f if line.strip()]
+            if quotes:
+                return random.choice(quotes)
+            else:
+                return "Your mind is powerful — take care of it! 💚"
 
 # Display Recent Entries
 if st.checkbox("Show recent entries"):
