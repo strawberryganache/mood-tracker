@@ -83,6 +83,8 @@ def get_random_quote():
                 return random.choice(quotes)
             else:
                 return "Your mind is powerful — take care of it! 💚"
+    except FileNotFoundError:
+        return "No quotes file found. Please add a quotes.txt."
 
 # Display Recent Entries
 if st.checkbox("Show recent entries"):
