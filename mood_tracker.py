@@ -75,6 +75,7 @@ if st.checkbox("Show mood chart"):
 #     ]
 #     st.info(random.choice(tips))
 
+#Load Quotes
 def get_random_quote():
     try:
         with open("quotes.txt", "r", encoding="utf-8") as f:
@@ -85,6 +86,11 @@ def get_random_quote():
                 return "Your mind is powerful — take care of it! 💚"
     except FileNotFoundError:
         return "No quotes file found. Please add a quotes.txt."
+
+#Show Quotes
+if st.button("Get Positive Quote"):
+    quote = get_random_quote()
+    st.info(quote)
 
 # Display Recent Entries
 if st.checkbox("Show recent entries"):
