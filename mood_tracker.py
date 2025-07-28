@@ -33,7 +33,7 @@ if st.button("Save Entry"):
 
 # Show Data
 if st.checkbox("Show mood chart"):
-    c.execute("SELECT date, sentiment FROM moods")
+    c.execute("SELECT date, sentiment FROM moods ORDER BY date")
     data = c.fetchall()
     if data:
         dates = [x[0] for x in data]
@@ -41,7 +41,18 @@ if st.checkbox("Show mood chart"):
         plt.plot(dates, scores)
         plt.xticks(rotation=45)
         plt.title("Mood Sentiment Over Time")
+        plt.ylabel("Sentiment Score")
+        plt.xlabel("Date")
         st.pyplot(plt)
+    else:
+        st.info("No mood data available yet. Start tracking your moods!")
+
+        
+        #plt.clf()  # Clear previous plots
+        #plt.figure(figsize=(10, 6))
+        #plt.plot(dates, scores, marker='o')
+        #plt.grid(True, alpha=0.3)
+    
 
 # Positive Tip
 if st.button("Get Positive Quote"):
@@ -56,7 +67,7 @@ if st.button("Get Positive Quote"):
     ]
     st.info(random.choice(tips))
 
-# Display recent entries
+# Display Recent Entries
 if st.checkbox("Show recent entries"):
     c.execute("SELECT date, mood, note, sentiment FROM moods ORDER BY date DESC LIMIT 5")
     recent_data = c.fetchall()
