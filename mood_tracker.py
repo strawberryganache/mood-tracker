@@ -27,8 +27,9 @@ def init_db():
 # Initialize Database
 conn, c = init_db()
 
-# Title
+# Title and Logo
 st.title("🧘 Mental Health Mood Tracker")
+st.logo("🧘")
 
 # Input
 st.write("How are you feeling today?")
@@ -61,19 +62,6 @@ if st.checkbox("Show mood chart"):
         st.pyplot(plt)
     else:
         st.info("No mood data available yet. Start tracking your moods!")
-
-# Positive Tip
-# if st.button("Get Positive Quote"):
-#     tips = [
-#         "You are doing great! 🌟",
-#         "Remember to take deep breaths. 💙",
-#         "Small steps are still steps forward. ✨",
-#         "Be kind to yourself today. ☀️",
-#         "Every day is a new opportunity. 🌈",
-#         "You are stronger than you think. 💪",
-#         "Take time to appreciate the little things. 🌸"
-#     ]
-#     st.info(random.choice(tips))
 
 #Load Quotes
 def get_random_quote():
