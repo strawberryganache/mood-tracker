@@ -51,7 +51,7 @@ if st.checkbox("Show mood chart"):
         scores = [x[1] for x in data]
         
         plt.clf()
-        plt.style.use('bmh')
+        plt.style.use('classic')
         plt.figure(figsize=(10, 6))
         plt.plot(dates, scores, marker='o', color='mediumseagreen')
         plt.xticks(rotation=45)
