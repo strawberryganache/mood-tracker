@@ -38,20 +38,18 @@ if st.checkbox("Show mood chart"):
     if data:
         dates = [x[0] for x in data]
         scores = [x[1] for x in data]
-        plt.plot(dates, scores, marker='o')
+        plt.clf()
+        plt.plot(dates, scores, marker='o', color='mediumseagreen')
         plt.xticks(rotation=45)
         plt.title("Mood Sentiment Over Time")
         plt.ylabel("Sentiment Score")
         plt.xlabel("Date")
+        plt.grid(True, alpha=0.3)
         st.pyplot(plt)
     else:
         st.info("No mood data available yet. Start tracking your moods!")
 
-        
-        #plt.clf()  # Clear previous plots
         #plt.figure(figsize=(10, 6))
-        #plt.grid(True, alpha=0.3)
-    
 
 # Positive Tip
 if st.button("Get Positive Quote"):
