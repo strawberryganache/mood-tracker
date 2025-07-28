@@ -63,6 +63,7 @@ if st.button("Save Entry"):
 
 # Show Data
 if st.checkbox("Show my mood chart"):
+    print (username)
     c.execute("SELECT date, sentiment FROM moods WHERE username = ? ORDER BY date", (username,))
     data = c.fetchall()
     if data:
