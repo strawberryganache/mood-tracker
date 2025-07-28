@@ -37,7 +37,7 @@ conn, c = init_db()
 
 # Title
 st.title("🧘 Mental Health Mood Tracker")
-st.markdown("Track your daily mood, add a note, and reflect on your well-being over time.")
+st.subheader("Track your daily mood, add a note, and reflect on your well-being over time.")
 
 # Username
 
