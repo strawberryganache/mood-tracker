@@ -10,12 +10,22 @@ nltk.download('vader_lexicon')
 sia = SentimentIntensityAnalyzer()
 
 # Database
-conn = sqlite3.connect('moods.db', check_same_thread=False)
-c = conn.cursor()
-c.execute('''
-    CREATE TABLE IF NOT EXISTS moods (date TEXT, mood TEXT, note TEXT, sentiment REAL)
-''')
-conn.commit()
+def init_db():
+    conn = sqlite3.connect('moods.db', check_same_thread=False)
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS moods (
+            date TEXT,
+            mood TEXT,
+            note TEXT,
+            sentiment REAL
+        )
+    ''')
+    conn.commit()
+    return conn, c
+
+# Initialize Database
+conn, c = init_db()
 
 # Title
 st.title("🧘 Mental Health Mood Tracker")
@@ -24,8 +34,9 @@ st.title("🧘 Mental Health Mood Tracker")
 st.write("How are you feeling today?")
 mood = st.radio("Mood", ["😊 Happy", "😐 Neutral", "😢 Sad"])
 note = st.text_area("Add a short note (optional)")
+
 if st.button("Save Entry"):
-    sentiment = sia.polarity_scores(note)["compound"]
+    sentiment = sia.polarity_scores(note)["compound"] if note else 0.0
     c.execute("INSERT INTO moods (date, mood, note, sentiment) VALUES (?, ?, ?, ?)",
               (str(date.today()), mood, note, sentiment))
     conn.commit()
@@ -38,7 +49,10 @@ if st.checkbox("Show mood chart"):
     if data:
         dates = [x[0] for x in data]
         scores = [x[1] for x in data]
+        
         plt.clf()
+        plt.style.use('seaborn-vivid')
+        plt.figure(figsize=(10, 6))
         plt.plot(dates, scores, marker='o', color='mediumseagreen')
         plt.xticks(rotation=45)
         plt.title("Mood Sentiment Over Time")
@@ -48,8 +62,6 @@ if st.checkbox("Show mood chart"):
         st.pyplot(plt)
     else:
         st.info("No mood data available yet. Start tracking your moods!")
-
-        #plt.figure(figsize=(10, 6))
 
 # Positive Tip
 if st.button("Get Positive Quote"):
