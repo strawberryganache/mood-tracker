@@ -51,7 +51,7 @@ else:
     st.stop()
 
 # Input
-st.write("Hi " ,username, ", how are you feeling today?")
+st.write(f"Hi {username}, how are you feeling today?")
 mood = st.radio("Mood", ["😊 Happy", "😐 Neutral", "😢 Sad"])
 note = st.text_area("Add a short note (optional)")
 
@@ -74,7 +74,7 @@ if st.checkbox("Show my mood chart"):
         plt.figure(figsize=(10, 6))
         plt.plot(dates, scores, marker='o', color='mediumseagreen')
         plt.xticks(rotation=45)
-        plt.title( username, "'s Mood Sentiment Over Time")
+        plt.title(f"{username}'s Sentiment Over Time")
         plt.ylabel("Sentiment Score")
         plt.xlabel("Date")
         plt.grid(True, alpha=0.3)
