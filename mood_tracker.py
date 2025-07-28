@@ -40,14 +40,20 @@ st.title("🧘 Mental Health Mood Tracker")
 st.markdown("Track your daily mood, add a note, and reflect on your well-being over time.")
 
 # Username
-st.sidebar.title("Login")
-username = st.sidebar.text_input("Enter your username")
 
-if username:
-    st.session_state["username"] = username
-    st.sidebar.success(f"Logged in as: {username}")
-else:
-    st.stop()
+username = st.text_input("Enter your username or nickname:")
+if not username:
+st.warning("Please enter your username to begin.")
+st.stop()
+
+# st.sidebar.title("Login")
+# username = st.sidebar.text_input("Enter your username")
+
+# if username:
+#     st.session_state["username"] = username
+#     st.sidebar.success(f"Logged in as: {username}")
+# else:
+#     st.stop()
 
 # Input
 st.write("How are you feeling today?")
