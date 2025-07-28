@@ -56,4 +56,19 @@ if st.button("Get Positive Quote"):
     ]
     st.info(random.choice(tips))
 
+# Display recent entries
+if st.checkbox("Show recent entries"):
+    c.execute("SELECT date, mood, note, sentiment FROM moods ORDER BY date DESC LIMIT 5")
+    recent_data = c.fetchall()
+    if recent_data:
+        st.write("### Recent Entries:")
+        for entry in recent_data:
+            st.write(f"**{entry[0]}** - {entry[1]}")
+            if entry[2]:
+                st.write(f"Note: {entry[2]}")
+            st.write(f"Sentiment: {entry[3]:.2f}")
+            st.write("---")
+    else:
+        st.info("No entries found.")
+
 conn.close()
