@@ -63,8 +63,7 @@ if st.button("Save Entry"):
 
 # Show Data
 if st.checkbox("Show my mood chart"):
-    #c.execute("SELECT date, sentiment FROM moods WHERE username = ? ORDER BY date", (username,))
-    c.execute("SELECT date, sentiment FROM moods ORDER BY date")
+    c.execute("SELECT date, sentiment FROM moods WHERE username = ? ORDER BY date", (username,))
     data = c.fetchall()
     if data:
         dates = [x[0] for x in data]
