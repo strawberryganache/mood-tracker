@@ -62,8 +62,16 @@ if st.button("Save Entry"):
     conn.commit()
     st.success("Your mood has been saved! 💚")
 
+# Suggestions    
+    if mood == "😊 Happy":
+        st.info("Awesome! Keep spreading the positivity! ☀️")
+    elif mood == "😐 Neutral":
+        st.info("Try doing something you enjoy today! 🎨📚🎧")
+    elif mood == "😢 Sad":
+        st.info("It's okay to feel down sometimes. Talk to a friend or take a walk. 💙")
+
 # Show Data
-if st.checkbox("Show my mood chart"):
+if st.checkbox("Show my mood history"):
     c.execute("SELECT date, sentiment FROM moods WHERE username = ? ORDER BY date", (username,))
     data = c.fetchall()
     if data:
@@ -113,5 +121,32 @@ if st.checkbox("Show my recent entries"):
             st.write("---")
     else:
         st.info("No entries found.")
+
+if st.checkbox("Show my mood summary"):
+    c.execute("SELECT mood FROM moods WHERE username=?", (username,))
+    rows = c.fetchall()
+    if rows:
+        from collections import Counter
+        import matplotlib.pyplot as plt
+
+        moods = [r[0] for r in rows]
+        counts = Counter(moods)
+        labels = list(counts.keys())
+        values = list(counts.values())
+
+        # Emoji-friendly labels
+        emoji_labels = [f"{label} ({counts[label]})" for label in labels]
+
+        # Pie chart
+        fig, ax = plt.subplots()
+        ax.pie(values, labels=emoji_labels, autopct='%1.1f%%', startangle=90)
+        ax.axis('equal')
+        st.pyplot(fig)
+
+        # Most common mood
+        most_common = counts.most_common(1)[0][0]
+        st.markdown(f"🌟 Your most frequent mood is: **{most_common}**")
+    else:
+        st.info("Not enough mood data to show pie chart yet.")
 
 conn.close()
