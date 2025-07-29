@@ -56,7 +56,18 @@ mood = st.radio("Mood", ["😊 Happy", "😐 Neutral", "😢 Sad"])
 note = st.text_area("Add a short note (optional)")
 
 if st.button("Save Entry"):
-    sentiment = sia.polarity_scores(note)["compound"] if note else 0.0
+
+    if note.strip():
+        sentiment = sia.polarity_scores(note)["compound"]
+    else:
+        if mood == "😊 Happy":
+            sentiment = 0.5
+        elif mood == "😐 Neutral":
+            sentiment = 0.0
+        elif mood == "😢 Sad":
+            sentiment = -0.5
+        st.info("No note entered. Using selected mood to estimate your feeling.")
+        
     c.execute("INSERT INTO moods (username, date, mood, note, sentiment) VALUES (?, ?, ?, ?, ?)",
               (username, str(date.today()), mood, note, sentiment))
     conn.commit()
@@ -64,11 +75,11 @@ if st.button("Save Entry"):
 
 # Suggestions    
     if mood == "😊 Happy":
-        st.info("Awesome! Keep spreading the positivity! ☀️")
+        st.info("💡 Suggestion: Awesome! Keep spreading the positivity!")
     elif mood == "😐 Neutral":
-        st.info("Try doing something you enjoy today! 🎨📚🎧")
+        st.info("💡 Suggestion: Try doing something you enjoy today!")
     elif mood == "😢 Sad":
-        st.info("It's okay to feel down sometimes. Talk to a friend or take a walk. 💙")
+        st.info("💡 Suggestion: Take it easy. Talk to a friend or take a walk to lift your spirits.")
 
 # Show Data
 if st.checkbox("Show my mood history"):
