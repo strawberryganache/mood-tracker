@@ -41,7 +41,7 @@ st.markdown("Track your daily mood, add a note, and reflect on your well-being o
 
 # Username
 
-st.sidebar.title("Login")
+st.sidebar.title("Welcome! Please Login Below.")
 username = st.sidebar.text_input("Enter your username:", value="", max_chars=20)
 
 if username:
