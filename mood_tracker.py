@@ -48,7 +48,7 @@ if username:
     st.session_state["username"] = username
     st.sidebar.success(f"Logged in as: {username}")
 
-    section = st.sidebar.radio("Go to", [
+    section = st.sidebar.radio("Menu:", [
         "New Entry",
         "Mood History",
         "Recent Entries",
