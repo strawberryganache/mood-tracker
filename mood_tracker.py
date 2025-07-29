@@ -149,4 +149,85 @@ if st.checkbox("Show my mood summary"):
     else:
         st.info("Not enough mood data to show pie chart yet.")
 
+# --- Tic-Tac-Toe Functions ---
+def create_board():
+    return [[" " for _ in range(3)] for _ in range(3)]
+
+def check_win(board, player):
+    for i in range(3):
+        if all(board[i][j] == player for j in range(3)) or \
+           all(board[j][i] == player for j in range(3)):
+            return True
+    if all(board[i][i] == player for i in range(3)) or \
+       all(board[i][2 - i] == player for i in range(3)):
+        return True
+    return False
+
+def get_empty_positions(board):
+    return [(i, j) for i in range(3) for j in range(3) if board[i][j] == " "]
+
+def computer_move(board):
+    return random.choice(get_empty_positions(board))
+
+# --- Start Game Section ---
+st.header("🎯 Tic-Tac-Toe Game")
+
+# Game mode selection
+mode = st.selectbox("Choose Game Mode:", ["Play vs Computer 🤖", "Play with a Friend 👥"])
+
+# Session state to store game state
+if "board" not in st.session_state:
+    st.session_state.board = create_board()
+if "turn" not in st.session_state:
+    st.session_state.turn = "X"
+if "game_over" not in st.session_state:
+    st.session_state.game_over = False
+if "winner" not in st.session_state:
+    st.session_state.winner = ""
+
+# Handle move
+def handle_move(i, j):
+    if st.session_state.board[i][j] == " " and not st.session_state.game_over:
+        st.session_state.board[i][j] = st.session_state.turn
+
+        if check_win(st.session_state.board, st.session_state.turn):
+            st.session_state.game_over = True
+            st.session_state.winner = st.session_state.turn
+        elif not get_empty_positions(st.session_state.board):
+            st.session_state.game_over = True
+            st.session_state.winner = "Tie"
+        else:
+            st.session_state.turn = "O" if st.session_state.turn == "X" else "X"
+
+# Display the board
+for i in range(3):
+    cols = st.columns(3)
+    for j in range(3):
+        cell = st.session_state.board[i][j]
+        with cols[j]:
+            if cell == " " and not st.session_state.game_over:
+                if st.button(" ", key=f"{i}-{j}"):
+                    handle_move(i, j)
+
+                    # If playing vs computer and it's O's turn
+                    if mode == "Play vs Computer 🤖" and st.session_state.turn == "O" and not st.session_state.game_over:
+                        row, col = computer_move(st.session_state.board)
+                        handle_move(row, col)
+            else:
+                st.markdown(f"### {cell}")
+
+# Show result
+if st.session_state.game_over:
+    if st.session_state.winner == "Tie":
+        st.success("It's a tie! 😐")
+    else:
+        st.success(f"{'Computer 🤖' if (mode == 'Play vs Computer 🤖' and st.session_state.winner == 'O') else 'Player ' + st.session_state.winner} wins! 🎉")
+
+# Restart button
+if st.button("🔁 Restart Game"):
+    st.session_state.board = create_board()
+    st.session_state.turn = "X"
+    st.session_state.game_over = False
+    st.session_state.winner = ""
+
 conn.close()
