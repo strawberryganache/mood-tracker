@@ -49,11 +49,11 @@ if username:
     st.sidebar.success(f"Logged in as: {username}")
 
     section = st.sidebar.radio("Go to", [
-        "1. Mood Tracker",
-        "2. Mood History & Quote",
-        "3. Recent Entries",
-        "4. Mood Summary 📊",
-        "5. Play Game 🎮"
+        "New Entry",
+        "Mood History",
+        "Recent Entries",
+        "Mood Summary",
+        "Play Game"
     ])
     
 else:
