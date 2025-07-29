@@ -66,7 +66,7 @@ if st.button("Save Entry"):
             sentiment = 0.0
         elif mood == "😢 Sad":
             sentiment = -0.5
-        st.info("No note entered. Using selected mood to estimate your feeling.")
+        st.markdown("No note entered. Using selected mood to estimate your feeling.")
         
     c.execute("INSERT INTO moods (username, date, mood, note, sentiment) VALUES (?, ?, ?, ?, ?)",
               (username, str(date.today()), mood, note, sentiment))
