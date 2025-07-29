@@ -122,6 +122,7 @@ if st.checkbox("Show my recent entries"):
     else:
         st.info("No entries found.")
 
+#Show Mood Summary
 if st.checkbox("Show my mood summary"):
     c.execute("SELECT mood FROM moods WHERE username=?", (username,))
     rows = c.fetchall()
@@ -134,22 +135,21 @@ if st.checkbox("Show my mood summary"):
         labels = list(counts.keys())
         values = list(counts.values())
 
-        # Emoji-friendly labels
         emoji_labels = [f"{label} ({counts[label]})" for label in labels]
 
-        # Pie chart
+        # Pie Chart
         fig, ax = plt.subplots()
         ax.pie(values, labels=emoji_labels, autopct='%1.1f%%', startangle=90)
         ax.axis('equal')
         st.pyplot(fig)
 
-        # Most common mood
+        # Most Common Mood
         most_common = counts.most_common(1)[0][0]
         st.markdown(f"🌟 Your most frequent mood is: **{most_common}**")
     else:
         st.info("Not enough mood data to show pie chart yet.")
 
-# --- Tic-Tac-Toe Functions ---
+# Tic-Tac-Toe Functions
 def create_board():
     return [[" " for _ in range(3)] for _ in range(3)]
 
@@ -169,13 +169,14 @@ def get_empty_positions(board):
 def computer_move(board):
     return random.choice(get_empty_positions(board))
 
-# --- Start Game Section ---
-st.header("🎯 Tic-Tac-Toe Game")
+# Start Game 
+st.subheader("🎯 How About a Game to Cheer Up?")
+st.markdown ("Let's play Tic-Tac-Toe!")
 
-# Game mode selection
-mode = st.selectbox("Choose Game Mode:", ["Play vs Computer 🤖", "Play with a Friend 👥"])
+# Game Mode Selection
+mode = st.selectbox("Choose Game Mode:", ["Play vs Computer 💻", "Play vs Friend 👥"])
 
-# Session state to store game state
+# Session State to Store Game State
 if "board" not in st.session_state:
     st.session_state.board = create_board()
 if "turn" not in st.session_state:
@@ -185,7 +186,7 @@ if "game_over" not in st.session_state:
 if "winner" not in st.session_state:
     st.session_state.winner = ""
 
-# Handle move
+# Handle Move
 def handle_move(i, j):
     if st.session_state.board[i][j] == " " and not st.session_state.game_over:
         st.session_state.board[i][j] = st.session_state.turn
@@ -199,7 +200,7 @@ def handle_move(i, j):
         else:
             st.session_state.turn = "O" if st.session_state.turn == "X" else "X"
 
-# Display the board
+# Display the Board
 for i in range(3):
     cols = st.columns(3)
     for j in range(3):
@@ -209,8 +210,8 @@ for i in range(3):
                 if st.button(" ", key=f"{i}-{j}"):
                     handle_move(i, j)
 
-                    # If playing vs computer and it's O's turn
-                    if mode == "Play vs Computer 🤖" and st.session_state.turn == "O" and not st.session_state.game_over:
+                    # If Playing vs Computer and it's O's Turn
+                    if mode == "Play vs Computer 💻" and st.session_state.turn == "O" and not st.session_state.game_over:
                         row, col = computer_move(st.session_state.board)
                         handle_move(row, col)
             else:
@@ -219,9 +220,9 @@ for i in range(3):
 # Show result
 if st.session_state.game_over:
     if st.session_state.winner == "Tie":
-        st.success("It's a tie! 😐")
+        st.success("It's a tie!")
     else:
-        st.success(f"{'Computer 🤖' if (mode == 'Play vs Computer 🤖' and st.session_state.winner == 'O') else 'Player ' + st.session_state.winner} wins! 🎉")
+        st.success(f"{'Computer 💻' if (mode == 'Play vs Computer 💻' and st.session_state.winner == 'O') else 'Player ' + st.session_state.winner} wins! 🎉")
 
 # Restart button
 if st.button("🔁 Restart Game"):
