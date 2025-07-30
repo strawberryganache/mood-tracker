@@ -127,7 +127,7 @@ if section == "Mood History":
             return "No quotes file found. Please add a quotes.txt."
     
     #Show Quotes
-    if st.button("Get A Positive Quote"):
+    if st.button("Get A Positive Tip"):
         quote = get_random_quote()
         st.info(quote)
 
