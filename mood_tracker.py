@@ -201,7 +201,7 @@ if section == "Play Game":
     
     # Start Game 
     st.subheader("🎯 How About a Game to Cheer Up?")
-    st.markdown ("Let's play Tic-Tac-Toe!")
+    st.markdown ("Let's play Tic-Tac-Toe! (Note: Remember to double click on the buttons when making your move or restarting the game.)")
     
     # Game Mode Selection
     mode = st.selectbox("Choose Game Mode:", ["Play vs Computer 💻", "Play vs Friend 👥"])
