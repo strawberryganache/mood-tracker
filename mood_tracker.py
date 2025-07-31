@@ -136,12 +136,11 @@ if section == "Mood History":
 if section == "Recent Entries":
 
     # Display Recent Entries
-    st.subheader("Your Recent Entries:")
     c.execute("SELECT date, mood, note, sentiment FROM moods WHERE username = ? ORDER BY date DESC LIMIT 5", (username,))
     recent_data = c.fetchall()
     
     if recent_data:
-        st.write("### Recent Entries:")
+        st.write("### Your Recent Entries:")
         for entry in recent_data:
             st.write(f"**{entry[0]}** - {entry[1]}")
             if entry[2]:
