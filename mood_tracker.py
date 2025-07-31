@@ -136,7 +136,7 @@ if section == "Mood History":
 if section == "Recent Entries":
 
     # Display Recent Entries
-    st.checkbox("Your Recent Entries:")
+    st.subheader("Your Recent Entries:")
     c.execute("SELECT date, mood, note, sentiment FROM moods WHERE username = ? ORDER BY date DESC LIMIT 5", (username,))
     recent_data = c.fetchall()
     
