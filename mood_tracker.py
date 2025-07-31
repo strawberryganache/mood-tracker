@@ -95,7 +95,7 @@ if section == "New Entry":
 if section == "Mood History":
 
     # Show Data
-    st.subheader("Your Past Mood History:"):
+    st.subheader("Your Past Mood History:")
     c.execute("SELECT date, sentiment FROM moods WHERE username = ? ORDER BY date", (username,))
     data = c.fetchall()
     
@@ -136,7 +136,7 @@ if section == "Mood History":
 if section == "Recent Entries":
 
     # Display Recent Entries
-    st.checkbox("Your Recent Entries:"):
+    st.checkbox("Your Recent Entries:")
     c.execute("SELECT date, mood, note, sentiment FROM moods WHERE username = ? ORDER BY date DESC LIMIT 5", (username,))
     recent_data = c.fetchall()
     
@@ -154,7 +154,7 @@ if section == "Recent Entries":
 if section == "Mood Summary":
 
     #Show Mood Summary
-    st.subheader("Your Overall Mood Summary:"):
+    st.subheader("Your Overall Mood Summary:")
     c.execute("SELECT mood FROM moods WHERE username=?", (username,))
     rows = c.fetchall()
     
